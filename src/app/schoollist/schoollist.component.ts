@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Apollo } from 'apollo-angular';
+import { Apollo, QueryRef } from 'apollo-angular';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import gql from 'graphql-tag';
@@ -12,11 +12,12 @@ import { School, PopularSchools } from '../types';
   styleUrls: ['./schoollist.component.css']
 })
 export class SchoollistComponent implements OnInit {
+  schoolsRef: QueryRef<PopularSchools>;
   schools: Observable<School[]>;
   constructor(private apollo: Apollo) { }
 
   ngOnInit() {
-    this.schools = this.apollo.watchQuery<PopularSchools>({
+    this.schoolsRef = this.apollo.watchQuery<PopularSchools>({
       query: gql`
       query {
         getpopularschools {
@@ -40,11 +41,17 @@ export class SchoollistComponent implements OnInit {
         }
       }
       `
-    })
-    .valueChanges
-    .pipe(
-      map(result => result.data.getpopularschools)
-    );
+    });
+
+    this.schools = this.schoolsRef
+      .valueChanges
+      .pipe(
+        map(result => result.data.getpopularschools)
+      );
+  }
+
+  refresh() {
+    this.schoolsRef.refetch()
   }
 }
 
