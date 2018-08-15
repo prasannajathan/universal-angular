@@ -1,5 +1,6 @@
-import { NgModule } from '@angular/core';
+import { NgModule, PLATFORM_ID, Inject } from '@angular/core';
 import { BrowserTransferStateModule, TransferState, makeStateKey } from '@angular/platform-browser';
+import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 // Apollo
 import { ApolloModule, Apollo } from 'apollo-angular';
@@ -25,34 +26,31 @@ export class GraphQLModule {
   constructor(
     private apollo: Apollo,
     private readonly transferState: TransferState,
-    private httpLink: HttpLink
+    private httpLink: HttpLink,
+    @Inject(PLATFORM_ID) private _platformId: Object
   ) {
     this.cache = new InMemoryCache();
     this.link = this.httpLink.create({ uri });
 
-    this.apollo.create({
-      link: this.link,
-      cache: this.cache,
-    });
+    if (isPlatformBrowser(this._platformId)) {
+      this.apollo.create({
+        link: this.link,
+        cache: this.cache
+      });
 
-    const isBrowser = this.transferState.hasKey<any>(STATE_KEY);
-
-    if (isBrowser) {
-      this.onBrowser();
-    } else {
-      this.onServer();
+      this.cache.restore(this.transferState.get<any>(STATE_KEY, null as any));
     }
-  }
 
-  onServer() {
-    this.transferState.onSerialize(STATE_KEY, () =>
-      this.cache.extract()
-    );
-  }
+    if (isPlatformServer(this._platformId)) {
+      this.apollo.create({
+        link: this.link,
+        cache: this.cache,
+        ssrMode: true
+      });
 
-  onBrowser() {
-    const state = this.transferState.get<any>(STATE_KEY, null);
-
-    this.cache.restore(state);
+      this.transferState.onSerialize(STATE_KEY, () =>
+        this.cache.extract()
+      );
+    }
   }
 }

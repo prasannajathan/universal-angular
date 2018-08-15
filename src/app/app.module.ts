@@ -1,4 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, BrowserTransferStateModule  } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
@@ -12,6 +12,7 @@ import { GraphQLModule } from './graphql.module';
   ],
   imports: [
     BrowserModule.withServerTransition({appId: 'app-component'}),
+    BrowserTransferStateModule,
     GraphQLModule
   ],
   providers: [],
