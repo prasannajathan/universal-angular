@@ -25,18 +25,7 @@ export class SchoollistComponent implements OnInit {
           Name
           Caption
           Location {
-            AddressLine1
-            AddressLine2
             City
-            CountryCode
-            CountryId
-            CountryName
-            Latitude
-            LocationId
-            Longitude
-            SchoolId
-            State
-            StateId
           }
         }
       }

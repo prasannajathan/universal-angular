@@ -37,3 +37,7 @@ export type Location = {
 export type PopularSchools = {
   getpopularschools: School[];
 }
+
+export type AllSchools = {
+  getallschools: School[];
+}
