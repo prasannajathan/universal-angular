@@ -1,27 +1,27 @@
-import { BrowserModule, BrowserTransferStateModule  } from '@angular/platform-browser';
+import { BrowserModule, BrowserTransferStateModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 
-import { SchoollistComponent } from './schoollist/schoollist.component';
-import { SchooldetailsComponent} from './schooldetails/schooldetails.component';
+import { SchoolListComponent } from './school-list/school-list.component';
+import { SchoolDetailsComponent } from './school-details/school-details.component';
 
 import { GraphQLModule } from './graphql.module';
-import { AppRoutingModule } from './app.routing.module';
+import { RoutingModule } from './routing.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SchoollistComponent,
-    SchooldetailsComponent
+    SchoolListComponent,
+    SchoolDetailsComponent
   ],
   imports: [
-    BrowserModule.withServerTransition({appId: 'app-component'}),
+    BrowserModule.withServerTransition({ appId: 'app-component' }),
     BrowserTransferStateModule,
     GraphQLModule,
-    AppRoutingModule
+    RoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

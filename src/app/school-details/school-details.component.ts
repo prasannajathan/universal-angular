@@ -7,11 +7,11 @@ import gql from 'graphql-tag';
 import { School, AllSchools } from '../types';
 
 @Component({
-  selector: 'app-schooldetails',
-  templateUrl: './schooldetails.component.html',
-  styleUrls: ['./schooldetails.component.css']
+  selector: 'app-school-details',
+  templateUrl: './school-details.component.html',
+  styleUrls: ['./school-details.component.css']
 })
-export class SchooldetailsComponent implements OnInit {
+export class SchoolDetailsComponent implements OnInit {
   schoolRef: QueryRef<AllSchools>;
   schools: Observable<School[]>;
   constructor(private apollo: Apollo) { }

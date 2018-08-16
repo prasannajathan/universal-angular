@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { SchoollistComponent } from './schoollist/schoollist.component'
-import { SchooldetailsComponent } from './schooldetails/schooldetails.component'
+import { SchoolListComponent } from './school-list/school-list.component'
+import { SchoolDetailsComponent } from './school-details/school-details.component'
 
 const routes: Routes = [
   {
@@ -12,15 +12,15 @@ const routes: Routes = [
   },
   {
     path: "schools",
-    component: SchoollistComponent
+    component: SchoolListComponent
   },
   {
     path: "school/:id",
-    component: SchooldetailsComponent
+    component: SchoolDetailsComponent
   }
 ]
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class RoutingModule { }
